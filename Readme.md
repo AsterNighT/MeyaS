@@ -10,7 +10,10 @@
 - I suppose for your school work only.
 
 ## How to use it?
-- See test/client.cpp and test/server.cpp
+- Build the project with cmake
+- Add the include files to your include dir
+- Link your project with the lib
+- For demos, see test/client.cpp and test/server.cpp
 
 ## Other
 - define DEBUG_MeyaS to make every error throw an exception.
