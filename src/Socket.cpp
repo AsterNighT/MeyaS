@@ -25,7 +25,6 @@ void MeyaS::Socket::shutdown() {
     sockfd = INVALID_SOCKET;
     freeaddrinfo(addrInfo);
     addrInfo = nullptr;
-    WSACleanup();
 }
 
 MeyaS::Socket::~Socket() {

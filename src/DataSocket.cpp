@@ -1,7 +1,7 @@
 #include <Exception.h>
 #include "DataSocket.h"
 
-MeyaS::DataPack MeyaS::DataSocket::recv(uint maxLength) {
+MeyaS::DataPack* MeyaS::DataSocket::recv(uint maxLength) {
     char recvbuf[maxLength];
     int iResult;
     iResult = ::recv(sockfd, recvbuf, maxLength, 0);
@@ -16,8 +16,8 @@ MeyaS::DataPack MeyaS::DataSocket::recv(uint maxLength) {
         }
         return {};
     }
-    auto ret = DataPack(recvbuf, iResult);
-    ret.type = 0;
+    std::clog << iResult << " bytes of data received." << std::endl;
+    auto *ret = new DataPack(recvbuf, iResult);
     return ret;
 }
 
@@ -34,17 +34,18 @@ bool MeyaS::DataSocket::send(const DataPack &dataPack) {
         }
         return false;
     }
+    std::clog << iResult << " bytes of data sent.";
     return true;
 }
 
 MeyaS::DataPack::DataPack() : data(nullptr), length(0), type(0) {}
 
 MeyaS::DataPack::DataPack(void *data, MeyaS::uint length) : length(length), type(0) {
-    this->data = new byte(length);
+    this->data = new byte[length];
     memcpy((void *) this->data, data, length);
 }
 
 MeyaS::DataPack::~DataPack() {
-    delete this->data;
+    delete[] this->data;
     this->data = nullptr;
 }

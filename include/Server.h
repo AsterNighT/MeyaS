@@ -7,9 +7,9 @@
 
 namespace MeyaS {
     class Server {
-    private:
+    public:
         Server() = default;
-        uint startListening(uint peersDemanded);
+        MeyaS::uint startListening(MeyaS::uint peersDemanded, MeyaS::uint maxWaitTimeMilliseconds = 3000);
         const std::vector<DataStream*>& getPeers();
     private:
         std::vector<DataStream*> peers;

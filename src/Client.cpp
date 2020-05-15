@@ -19,9 +19,10 @@ std::vector<std::string> MeyaS::Client::probeServer() {
     t.start(1000);
     while (!t.timeUp()) {
         auto p = socket.accept();
-        if (p.first.length != 0) {
+        if (p.first!= nullptr&&p.first->length != 0) {
             servers.emplace_back(p.second);
         }
+        delete p.first;
     }
     return servers;
 }

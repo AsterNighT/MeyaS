@@ -15,7 +15,7 @@ namespace MeyaS {
 
         bool listen();
 
-        std::pair<DataPack, std::string> accept();
+        std::pair<DataPack*, std::string> accept();
 
     private:
         uint type;

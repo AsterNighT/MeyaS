@@ -69,8 +69,11 @@ bool MeyaS::Broadcaster::listen() {
     return true;
 }
 
-std::pair<MeyaS::DataPack, std::string> MeyaS::Broadcaster::accept() {
-    if (type != BROADCAST_RECV) return {};
+std::pair<MeyaS::DataPack *, std::string> MeyaS::Broadcaster::accept() {
+    if (type != BROADCAST_RECV) {
+        DebugException("Broadcast accept failed");
+        return {};
+    }
     type = BROADCAST_RECV;
     sockaddr_in sender{};
     int len = sizeof(sockaddr_in);
@@ -87,5 +90,5 @@ std::pair<MeyaS::DataPack, std::string> MeyaS::Broadcaster::accept() {
         }
         return {};
     }
-    return make_pair(DataPack(recvbuff, iResult), std::to_string(sender.sin_port));
+    return std::make_pair(new DataPack(recvbuff, iResult), std::string(inet_ntoa(sender.sin_addr)));
 }

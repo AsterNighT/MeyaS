@@ -4,7 +4,7 @@ bool MeyaS::DataStream::send(const DataPack &data) {
     return socket->send(data);
 }
 
-MeyaS::DataPack MeyaS::DataStream::recv(MeyaS::uint maxLength) {
+MeyaS::DataPack* MeyaS::DataStream::recv(MeyaS::uint maxLength) {
     return socket->recv(maxLength);
 }
 

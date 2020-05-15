@@ -13,8 +13,9 @@ MeyaS::ClientSocket::ClientSocket(Address *serverAddress) : serverAddress(server
         WSACleanup();
         DebugException("Getaddrinfo failed");
     }
+    ((sockaddr_in *)result->ai_addr)->sin_port = 12448;
     initialize(result);
-    setBlocking(false);
+    //setBlocking(false);
 }
 
 bool MeyaS::ClientSocket::connect() {
@@ -22,6 +23,11 @@ bool MeyaS::ClientSocket::connect() {
     int iResult = SOCKET_ERROR;
     while (ptr != nullptr && iResult == SOCKET_ERROR) {
         iResult = ::connect(sockfd, ptr->ai_addr, (int) ptr->ai_addrlen);
+        if (iResult == SOCKET_ERROR) {
+            auto err = WSAGetLastError();
+            std::cerr << err << std::endl;
+        }
+        ptr = ptr->ai_next;
     }
     if (iResult == SOCKET_ERROR) {
         std::cerr << "Unable to connect to server!" << std::endl;

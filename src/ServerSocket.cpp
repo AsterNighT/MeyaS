@@ -76,7 +76,7 @@ bool MeyaS::ServerSocket::listen() {
 MeyaS::WorkerSocket *MeyaS::ServerSocket::accept() {
     auto workerSockfd = INVALID_SOCKET;
     sockaddr addr{};
-    int addrlen;
+    int addrlen = sizeof(sockaddr);
     workerSockfd = ::accept(sockfd, &addr, &addrlen);
     sockaddr_in *addrin = (reinterpret_cast<sockaddr_in *>(&addr));
 
