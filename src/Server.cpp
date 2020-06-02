@@ -13,7 +13,7 @@ MeyaS::uint MeyaS::Server::startListening(MeyaS::uint peersDemanded, MeyaS::uint
     server->listen();
     Timer t{};
     t.start(maxWaitTimeMilliseconds);
-    DataPack data = DataPack((void *) "lo", 2);
+    DataPack data = DataPack((void *) "lo$", 4);
     while (!t.timeUp() && cnt < peersDemanded) {
         broadcaster->shout(data);
         auto *ptr = server->accept();
