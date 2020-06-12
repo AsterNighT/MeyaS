@@ -5,8 +5,9 @@
 
 namespace MeyaS {
     struct DataPack {
-        DataPack();
+        DataPack() = delete;
         DataPack(void* data,uint length);
+        explicit DataPack(const std::string& data);
         ~DataPack();
         const byte *data;
         uint length;

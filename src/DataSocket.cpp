@@ -14,7 +14,7 @@ MeyaS::DataPack* MeyaS::DataSocket::recv(uint maxLength) {
             WSACleanup();
             DebugException("Recv failed");
         }
-        return {};
+        return nullptr;
     }
     std::clog << iResult << " bytes of data received." << std::endl;
     auto *ret = new DataPack(recvbuf, iResult);
@@ -38,7 +38,7 @@ bool MeyaS::DataSocket::send(const DataPack &dataPack) {
     return true;
 }
 
-MeyaS::DataPack::DataPack() : data(nullptr), length(0), type(0) {}
+//MeyaS::DataPack::DataPack() : data(nullptr), length(0), type(0) {}
 
 MeyaS::DataPack::DataPack(void *data, MeyaS::uint length) : length(length), type(0) {
     this->data = new byte[length];
@@ -48,4 +48,10 @@ MeyaS::DataPack::DataPack(void *data, MeyaS::uint length) : length(length), type
 MeyaS::DataPack::~DataPack() {
     delete[] this->data;
     this->data = nullptr;
+}
+
+MeyaS::DataPack::DataPack(const std::string &data) {
+    length = data.length()+1;
+    this->data = new byte[length];
+    memcpy((void *) this->data, data.c_str(), length);
 }

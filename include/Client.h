@@ -5,11 +5,15 @@
 namespace MeyaS {
     class Client {
     public:
-        Client() = default;
+        Client();
+        ~Client();
         bool connectTo(Address* address);
-        static std::vector<std::string> probeServer();
+        std::vector<std::string> probeServer() const;
+        std::string handleMessage();
         DataStream* getPeer();
     private:
+        std::string cache;
+        int maxWaitTime;
         DataStream* peer;
     };
 }

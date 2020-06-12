@@ -1,20 +1,21 @@
 #pragma once
 
 #include "common.h"
-#include "DataStream.h"
 #include "Broadcaster.h"
-#include "WorkerSocket.h"
+#include "ServerSocket.h"
+#include "Worker.h"
 
 namespace MeyaS {
     class Server {
     public:
-        Server() = default;
-        MeyaS::uint startListening(MeyaS::uint peersDemanded, MeyaS::uint maxWaitTimeMilliseconds = 3000);
-        const std::vector<DataStream*>& getPeers();
+        Server();
+        MeyaS::uint startListening(MeyaS::uint peersDemanded);
+        const std::vector<Worker*>& getPeers();
     private:
-        std::vector<DataStream*> peers;
-        Broadcaster* broadcaster{};
-        ServerSocket* server{};
+        int maxWaitTime;
+        std::vector<Worker*> peers;
+        Broadcaster* broadcaster;
+        ServerSocket* server;
     };
 }
 

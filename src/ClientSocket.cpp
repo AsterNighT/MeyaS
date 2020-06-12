@@ -15,6 +15,10 @@ MeyaS::ClientSocket::ClientSocket(Address *serverAddress) : serverAddress(server
     }
     ((sockaddr_in *)result->ai_addr)->sin_port = 12448;
     initialize(result);
+#ifdef NON_BLOCKING_RECEIVING_CLIENT
+    const int ReceiveTimeout = 10;
+    setsockopt(sockfd,SOL_SOCKET,SO_RCVTIMEO,(char*)&ReceiveTimeout, sizeof(int)));
+#endif
     //setBlocking(false);
 }
 

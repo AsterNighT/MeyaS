@@ -5,13 +5,12 @@
 int main(){
     MeyaS::initialize();
     auto client = MeyaS::Client();
-    auto serverList = MeyaS::Client::probeServer();
-    while(serverList.empty()) serverList = MeyaS::Client::probeServer();
+    auto serverList = client.probeServer();
+    while(serverList.empty()) serverList = client.probeServer();
     client.connectTo(MeyaS::Address::createAddress(serverList.at(0),DEFAULT_PORT));
     auto stream = client.getPeer();
-    auto p = MeyaS::DataPack();
-    p.data = reinterpret_cast<const byte *>("Hello world");
-    p.length = 12;
+    std::cout<<serverList.at(0)<<std::endl;
+    auto p = MeyaS::DataPack("Hello world$");
     stream->send(p);
 }
 
