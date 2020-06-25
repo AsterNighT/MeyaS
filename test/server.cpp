@@ -15,6 +15,10 @@ int main() {
 
     //Receiving data
     auto peers = soc.getPeers();
+    auto stream = peers.at(0)->getPeer();
     auto p = peers.at(0)->getPeer()->getLine();
     std::cout << p << std::endl;
+
+    //Sending data
+    stream->sendLine("Hello world 2");
 }
