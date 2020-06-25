@@ -36,20 +36,16 @@ MeyaS::Client::Client() : maxWaitTime(50), peer(nullptr) {
 
 std::string MeyaS::Client::handleMessage() {
     auto message = peer->getLine();
-    cache += message;
-    if (cache[cache.length() - 1] != '$') return "";//not ended yet;
-    if (cache.empty()) return "";
-    if (cache[0] == '#') { //command
-        if (cache == "#shutdown$") {
+    if (message.empty()) return "";
+    if (message[0] == '#') { //command
+        if (message == "#shutdown") {
             delete peer;
         }
-        if (cache == "#heart$") {
+        if (message == "#heart") {
             peer->sendLine("beat");
         }
     }
-    auto tmp = cache.substr(0, cache.length() - 1); //delete $
-    cache = "";
-    return tmp;
+    return message;
 }
 
 MeyaS::Client::~Client() {

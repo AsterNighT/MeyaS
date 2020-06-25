@@ -1,7 +1,7 @@
 #include <Timer.h>
 #include "Worker.h"
 
-MeyaS::Worker::Worker(DataStream *p) : maxWaitTime(3000), cache(), peer(p) {
+MeyaS::Worker::Worker(DataStream *p) : maxWaitTime(3000), peer(p) {
 
 }
 
@@ -15,16 +15,8 @@ bool MeyaS::Worker::checkStatus() {
     t.start(maxWaitTime);
     while (!t.timeUp()) {
         auto s = peer->getLine();
-        cache += s;
-        if (cache[cache.length() - 1] == '$') {
-            if (cache == "#beat$") {
-                cache = "";
-                return true;
-            } else {
-                cache = "";
-                return false;
-            }
-        }
+        if (s.empty()) continue;
+        return s == "#beat";
     }
     return false;
 }

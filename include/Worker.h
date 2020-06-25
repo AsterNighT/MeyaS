@@ -13,7 +13,6 @@ namespace MeyaS {
         bool checkStatus();
         void shutdown();
     private:
-        std::string cache;
         int maxWaitTime;
         DataStream *peer;
     };

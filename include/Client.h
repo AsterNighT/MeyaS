@@ -12,7 +12,6 @@ namespace MeyaS {
         std::string handleMessage();
         DataStream* getPeer();
     private:
-        std::string cache;
         int maxWaitTime;
         DataStream* peer;
     };

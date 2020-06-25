@@ -23,6 +23,7 @@ namespace MeyaS {
 
         std::string identifier;
     private:
+        std::string cache;
         int maxWaitTime;
         DataSocket *socket;
     };

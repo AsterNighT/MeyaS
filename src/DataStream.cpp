@@ -15,7 +15,8 @@ MeyaS::DataPack *MeyaS::DataStream::recv(MeyaS::uint maxLength) {
     return nullptr;
 }
 
-MeyaS::DataStream::DataStream(MeyaS::DataSocket *socket) : socket(socket), maxWaitTime(3000),identifier("Meyas") {}
+MeyaS::DataStream::DataStream(MeyaS::DataSocket *socket) : socket(socket), maxWaitTime(3000), identifier("Meyas"),
+                                                           cache() {}
 
 MeyaS::DataStream::~DataStream() {
     delete socket;
@@ -29,18 +30,24 @@ bool MeyaS::DataStream::sendLine(std::string s, char delimiter) {
 }
 
 std::string MeyaS::DataStream::getLine(char delimiter) {
-    std::string s;
+    std::string s = cache;
     MeyaS::Timer t;
     t.start(maxWaitTime);
     while (!t.timeUp()) {
         auto ret = socket->recv(512);
         if (ret != nullptr) {
             auto retString = std::string(reinterpret_cast<const char *>(ret->data));
+            delete ret;
             s += retString;
-            if (s[s.length() - 1] == delimiter) return s;
+            auto pos = s.find(delimiter);
+            if (pos != std::string::npos) { // Should be a full line
+                cache = s.substr(pos + 1);
+                s = s.substr(0, pos);
+                return s;
+            }
         }
     }
-    return s;
+    return "";
 }
 
 void MeyaS::DataStream::setWaitTime(int time) {
