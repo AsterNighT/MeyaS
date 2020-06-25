@@ -7,9 +7,19 @@ namespace MeyaS {
     public:
         Client();
         ~Client();
+
+        //Connect to server
         bool connectTo(Address* address);
+
+        //Probe for broadcasting server ips
         std::vector<std::string> probeServer() const;
+
+        //Handle incoming messages. Will handle pre-defined message like heartbeat and shutdown.
+        //Return the incoming message. Return empty string is no full line of message(ended with delimiter)
+        //is received.
         std::string handleMessage();
+
+        //Get ad DataStream for sending and receiving data.
         DataStream* getPeer();
     private:
         int maxWaitTime;
