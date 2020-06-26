@@ -8,6 +8,7 @@ bool MeyaS::Client::connectTo(MeyaS::Address *address) {
     if (!socket->connect()) return false;
     this->peer = new DataStream(socket);
     this->peer->setWaitTime(maxWaitTime);
+    alive = true;
     return true;
 }
 
@@ -31,7 +32,7 @@ MeyaS::DataStream *MeyaS::Client::getPeer() {
     return peer;
 }
 
-MeyaS::Client::Client() : maxWaitTime(50), peer(nullptr) {
+MeyaS::Client::Client() : maxWaitTime(50), peer(nullptr),alive(false) {
 }
 
 std::string MeyaS::Client::handleMessage() {
@@ -39,7 +40,7 @@ std::string MeyaS::Client::handleMessage() {
     if (message.empty()) return "";
     if (message[0] == '#') { //command
         if (message == "#shutdown") {
-            delete peer;
+            alive = false;
         }
         if (message == "#heart") {
             peer->sendLine("beat");
@@ -50,4 +51,8 @@ std::string MeyaS::Client::handleMessage() {
 
 MeyaS::Client::~Client() {
     delete peer;
+}
+
+bool MeyaS::Client::isAlive() const {
+    return alive;
 }

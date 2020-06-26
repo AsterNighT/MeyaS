@@ -21,7 +21,11 @@ namespace MeyaS {
 
         //Get ad DataStream for sending and receiving data.
         DataStream* getPeer();
+
+        //Check if the connection is alive
+        bool isAlive() const;
     private:
+        bool alive;
         int maxWaitTime;
         DataStream* peer;
     };

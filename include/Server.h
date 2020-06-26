@@ -16,8 +16,6 @@ namespace MeyaS {
     private:
         int maxWaitTime;
         std::vector<Worker*> peers;
-        Broadcaster* broadcaster;
-        ServerSocket* server;
     };
 }
 
