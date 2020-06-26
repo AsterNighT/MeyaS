@@ -24,14 +24,22 @@ namespace MeyaS {
         //Send a line of data, append delimiter to the end of s, return true if no error occurs.
         bool sendLine(std::string s, char delimiter = '$');
 
+        //Send a line of data, append delimiter to the end of s, return true if no error occurs.
+        bool sendLineW(std::wstring s, wchar_t delimiter = '$');
+
         //Receive a line of data ended with delimiter. If no full line of data is received within
         //maxWaitTime, return an empty string.
         std::string getLine(char delimiter = '$');
 
+        //Receive a line of data ended with delimiter. If no full line of data is received within
+        //maxWaitTime, return an empty string.
+        std::wstring getLineW(wchar_t delimiter = '$');
+
         //The name of the worker, edit this to identify different connections
-        std::string identifier;
+        std::wstring identifier;
     private:
         std::string cache;
+        std::wstring cacheW;
         int maxWaitTime;
         DataSocket *socket;
     };

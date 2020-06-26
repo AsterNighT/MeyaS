@@ -8,10 +8,11 @@ namespace MeyaS {
         DataPack() = delete;
         DataPack(void* data,uint length);
         explicit DataPack(const std::string& data);
+        explicit DataPack(const std::wstring& data);
         ~DataPack();
         const byte *data;
         uint length;
-        uint type;
+        uint type{};
     };
 
     class DataSocket : public Socket {

@@ -35,15 +35,15 @@ MeyaS::DataStream *MeyaS::Client::getPeer() {
 MeyaS::Client::Client() : maxWaitTime(50), peer(nullptr),alive(false) {
 }
 
-std::string MeyaS::Client::handleMessage() {
-    auto message = peer->getLine();
-    if (message.empty()) return "";
+std::wstring MeyaS::Client::handleMessage() {
+    auto message = peer->getLineW();
+    if (message.empty()) return L"";
     if (message[0] == '#') { //command
-        if (message == "#shutdown") {
+        if (message == L"#shutdown") {
             alive = false;
         }
-        if (message == "#heart") {
-            peer->sendLine("beat");
+        if (message == L"#heart") {
+            peer->sendLineW(L"beat");
         }
     }
     return message;

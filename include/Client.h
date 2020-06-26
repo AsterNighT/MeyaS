@@ -17,7 +17,7 @@ namespace MeyaS {
         //Handle incoming messages. Will handle pre-defined message like heartbeat and shutdown.
         //Return the incoming message. Return empty string is no full line of message(ended with delimiter)
         //is received.
-        std::string handleMessage();
+        std::wstring handleMessage();
 
         //Get ad DataStream for sending and receiving data.
         DataStream* getPeer();

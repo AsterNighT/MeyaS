@@ -10,13 +10,13 @@ MeyaS::DataStream *MeyaS::Worker::getPeer() {
 }
 
 bool MeyaS::Worker::checkStatus() {
-    peer->sendLine("#heart");
+    peer->sendLineW(L"#heart");
     MeyaS::Timer t;
     t.start(maxWaitTime);
     while (!t.timeUp()) {
-        auto s = peer->getLine();
+        auto s = peer->getLineW();
         if (s.empty()) continue;
-        if(s == "#beat"){
+        if(s == L"#beat"){
             return true;
         }else{
             alive = false;
@@ -28,7 +28,7 @@ bool MeyaS::Worker::checkStatus() {
 }
 
 void MeyaS::Worker::shutdown() {
-    peer->sendLine("#shutdown");
+    peer->sendLineW(L"#shutdown");
     alive = false;
 }
 

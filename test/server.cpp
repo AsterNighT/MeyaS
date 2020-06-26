@@ -1,9 +1,11 @@
 #include <iostream>
 #include <Server.h>
-
+#include <cstdio>
+#include <io.h>
 #include "MeyaS.h"
 
 int main() {
+    _setmode(_fileno(stdout), 0x00020000);
     //Initialize socket
     MeyaS::initialize();
 
@@ -16,9 +18,9 @@ int main() {
     //Receiving data
     auto peers = soc.getPeers();
     auto stream = peers.at(0)->getPeer();
-    auto p = peers.at(0)->getPeer()->getLine();
-    std::cout << p << std::endl;
+    auto p = stream->getLineW();
+    std::wcout << p << std::endl;
 
     //Sending data
-    stream->sendLine("Hello world 2");
+    stream->sendLineW(L"九磅十五便士");
 }
