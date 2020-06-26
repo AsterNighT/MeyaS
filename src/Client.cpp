@@ -38,7 +38,7 @@ MeyaS::Client::Client() : maxWaitTime(50), peer(nullptr),alive(false) {
 std::wstring MeyaS::Client::handleMessage() {
     auto message = peer->getLineW();
     if (message.empty()) return L"";
-    if (message[0] == '#') { //command
+    if (message[0] == L'#') { //command
         if (message == L"#shutdown") {
             alive = false;
         }

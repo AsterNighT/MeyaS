@@ -15,7 +15,7 @@ namespace MeyaS {
         std::vector<std::string> probeServer() const;
 
         //Handle incoming messages. Will handle pre-defined message like heartbeat and shutdown.
-        //Return the incoming message. Return empty string is no full line of message(ended with delimiter)
+        //Return the incoming message. Return empty string if no full line of message(ended with delimiter)
         //is received.
         std::wstring handleMessage();
 
