@@ -23,4 +23,6 @@ int main() {
 
     //Sending data
     stream->sendLineW(L"九磅十五便士");
+    stream->sendLineW(L"外加一份煎饼果子");
+    Sleep(2000);
 }
