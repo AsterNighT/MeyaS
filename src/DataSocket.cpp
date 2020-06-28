@@ -2,7 +2,9 @@
 #include "DataSocket.h"
 
 MeyaS::DataPack *MeyaS::DataSocket::recv(uint maxLength) {
-    char *recvbuf = new char[maxLength];
+    char *recvbuf = new char[maxLength+2];
+    recvbuf[maxLength] = 0;
+    recvbuf[maxLength+1] = 0;
     int iResult;
     iResult = ::recv(sockfd, recvbuf, maxLength, 0);
     if (iResult == SOCKET_ERROR) {
