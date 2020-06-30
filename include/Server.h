@@ -24,9 +24,9 @@ namespace MeyaS {
         //Get all the connections
         const std::vector<Worker*>& getPeers();
     private:
-        int slots;
         Broadcaster* broadcaster;
         ServerSocket* server;
+        int seats;
         int maxWaitTime;
         std::vector<Worker*> peers;
     };

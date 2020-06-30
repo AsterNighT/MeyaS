@@ -7,8 +7,8 @@ const std::vector<MeyaS::Worker *> &MeyaS::Server::getPeers() {
 
 MeyaS::uint MeyaS::Server::startListening(MeyaS::uint peersDemanded) {
     uint cnt = 0;
-    slots = peersDemanded;
-    if(slots<=0) return 0;
+    seats = peersDemanded;
+    if(seats <= 0) return 0;
     peers.clear();
     broadcaster = new Broadcaster();
     server = new ServerSocket(DEFAULT_PORT);
@@ -28,19 +28,19 @@ MeyaS::uint MeyaS::Server::startListening(MeyaS::uint peersDemanded) {
     return cnt;
 }
 
-MeyaS::Server::Server():maxWaitTime(30),broadcaster(nullptr),server(nullptr),slots(0) {
+MeyaS::Server::Server(): maxWaitTime(30), broadcaster(nullptr), server(nullptr), seats(0) {
 
 }
 
 bool MeyaS::Server::accept() {
-    if(slots<=0) return false;
+    if(seats <= 0) return false;
     if(broadcaster== nullptr||server== nullptr) return false;
     DataPack data = DataPack((void *) "lo$", 4);
     broadcaster->shout(data);
     auto *ptr = server->accept();
     if (ptr != nullptr) {
         peers.emplace_back(new Worker(new DataStream(ptr)));
-        slots--;
+        seats--;
         return true;
     }
     return false;
@@ -49,10 +49,10 @@ bool MeyaS::Server::accept() {
 bool MeyaS::Server::stopListening() {
     delete broadcaster; broadcaster = nullptr;
     delete server; server = nullptr;
-    slots = 0;
+    seats = 0;
     return true;
 }
 
 bool MeyaS::Server::isFullyConnected() const {
-    return slots<=0;
+    return seats <= 0;
 }
