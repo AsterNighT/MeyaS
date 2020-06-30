@@ -16,7 +16,7 @@ int main() {
     auto serverList = client.probeServer();
     while (serverList.empty()) serverList = client.probeServer();
     client.connectTo(MeyaS::Address::createAddress(serverList.at(0), DEFAULT_PORT));
-    client.getPeer()->setWaitTime(30000);
+    client.getPeer()->setWaitTime(1);
     //Send data
     auto stream = client.getPeer();
     std::cout << serverList.at(0) << std::endl;

@@ -32,7 +32,7 @@ MeyaS::DataStream *MeyaS::Client::getPeer() {
     return peer;
 }
 
-MeyaS::Client::Client() : maxWaitTime(50), peer(nullptr),alive(false) {
+MeyaS::Client::Client() : maxWaitTime(1), peer(nullptr),alive(false) {
 }
 
 std::wstring MeyaS::Client::handleMessage() {
