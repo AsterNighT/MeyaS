@@ -16,5 +16,6 @@
 - For demos, see test/client.cpp and test/server.cpp
 
 ## Other
-- define DEBUG_MeyaS to make every error throw an exception.
-- define LOG_MeyaS to make every error log its appearance.
+- define `DEBUG_MeyaS` to make every error throw an exception.
+- define `LOG_MeyaS` to make every error log its appearance.
+- define `BLOCKING_RECEIVING_CLIENT` to make client recv blocking, otherwise non-blocking

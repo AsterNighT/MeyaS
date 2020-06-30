@@ -14,6 +14,10 @@ int main() {
 
     //Waiting for connection
     soc.startListening(1);
+    while(!soc.isFullyConnected()){
+        soc.accept();
+    }
+    soc.stopListening();
 
     //Receiving data
     auto peers = soc.getPeers();
