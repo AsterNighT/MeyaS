@@ -35,5 +35,13 @@ int main() {
     s = client.handleMessage();
     while (s.empty()) s = client.handleMessage();
     std::wcout << s << std::endl;
+
+    s = client.handleMessage();
+    while (s.empty()) s = client.handleMessage();
+    std::wcout << s << std::endl;
+
+    s = client.handleMessage();
+    while (s.empty()) s = client.handleMessage();
+    std::wcout << s << std::endl;
 }
 
