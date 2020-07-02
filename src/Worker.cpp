@@ -19,9 +19,6 @@ bool MeyaS::Worker::checkStatus() {
     do {
         auto s = peer->getLineW();
         if (s.empty()) continue;
-        if (peer->cacheW.length() != 0) {
-            std::cout << peer->cacheW.length() << std::endl;
-        }
         if (s == L"#beat") {
             return true;
         } else {

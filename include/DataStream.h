@@ -37,9 +37,9 @@ namespace MeyaS {
 
         //The name of the worker, edit this to identify different connections
         std::wstring identifier;
+    private:
         std::string cache;
         std::wstring cacheW;
-    private:
         int maxWaitTime;
         DataSocket *socket;
     };
