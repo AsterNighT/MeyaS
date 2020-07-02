@@ -16,7 +16,7 @@ bool MeyaS::Worker::checkStatus() {
     }
     MeyaS::Timer t;
     t.start(maxWaitTime);
-    while (!t.timeUp()) {
+    do {
         auto s = peer->getLineW();
         if (s.empty()) continue;
         if (peer->cacheW.length() != 0) {
@@ -28,7 +28,7 @@ bool MeyaS::Worker::checkStatus() {
             alive = false;
             return false;
         }
-    }
+    } while (!t.timeUp());
     alive = false;
     return false;
 }
