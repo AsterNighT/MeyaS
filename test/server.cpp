@@ -28,5 +28,7 @@ int main() {
     //Sending data
     stream->sendLineW(L"九磅十五便士");
     stream->sendLineW(L"外加一份煎饼果子");
+    peers.at(0)->checkStatus();
+    std::wcout<<(peers.at(0)->isAlive()?L"True":L"False")<<std::endl;
     Sleep(2000);
 }

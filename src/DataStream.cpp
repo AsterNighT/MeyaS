@@ -15,7 +15,7 @@ MeyaS::DataPack *MeyaS::DataStream::recv(MeyaS::uint maxLength) {
     return nullptr;
 }
 
-MeyaS::DataStream::DataStream(MeyaS::DataSocket *socket) : socket(socket), maxWaitTime(1), identifier(L"Meyas"),
+MeyaS::DataStream::DataStream(MeyaS::DataSocket *socket) : socket(socket), maxWaitTime(5), identifier(L"Meyas"),
                                                            cache(), cacheW() {}
 
 MeyaS::DataStream::~DataStream() {
