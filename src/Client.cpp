@@ -18,13 +18,13 @@ std::vector<std::string> MeyaS::Client::probeServer() const {
     socket.listen();
     auto t = Timer();
     t.start(maxWaitTime + 3000);
-    while (!t.timeUp()) {
+    do {
         auto p = socket.accept();
         if (p.first != nullptr && p.first->length != 0) {
             servers.emplace_back(p.second);
         }
         delete p.first;
-    }
+    } while (!t.timeUp());
     return servers;
 }
 
@@ -32,7 +32,7 @@ MeyaS::DataStream *MeyaS::Client::getPeer() {
     return peer;
 }
 
-MeyaS::Client::Client() : maxWaitTime(1), peer(nullptr),alive(false) {
+MeyaS::Client::Client() : maxWaitTime(1), peer(nullptr), alive(false) {
 }
 
 std::wstring MeyaS::Client::handleMessage() {
