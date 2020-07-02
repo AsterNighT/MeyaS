@@ -1,7 +1,7 @@
 #include <Timer.h>
 #include "DataStream.h"
 
-bool MeyaS::DataStream::send(const DataPack &data) {
+int MeyaS::DataStream::send(const DataPack &data) {
     return socket->send(data);
 }
 
@@ -23,7 +23,7 @@ MeyaS::DataStream::~DataStream() {
     socket = nullptr;
 }
 
-bool MeyaS::DataStream::sendLine(std::string s, char delimiter) {
+int MeyaS::DataStream::sendLine(std::string s, char delimiter) {
     s += delimiter;
     auto t = DataPack(s);
     return send(t);
@@ -66,7 +66,7 @@ void MeyaS::DataStream::setWaitTime(int time) {
     this->maxWaitTime = time;
 }
 
-bool MeyaS::DataStream::sendLineW(std::wstring s, wchar_t delimiter) {
+int MeyaS::DataStream::sendLineW(std::wstring s, wchar_t delimiter) {
     s += delimiter;
     auto t = DataPack(s);
     return send(t);

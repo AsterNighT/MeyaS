@@ -9,7 +9,11 @@ MeyaS::DataStream *MeyaS::Worker::getPeer() {
 }
 
 bool MeyaS::Worker::checkStatus() {
-    peer->sendLineW(L"#heart");
+    auto ret = peer->sendLineW(L"#heart");
+    if(ret!=0) {
+        alive = false;
+        return false;
+    }
     MeyaS::Timer t;
     t.start(maxWaitTime);
     while (!t.timeUp()) {
