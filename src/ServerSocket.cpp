@@ -14,7 +14,7 @@
     int iResult = getaddrinfo(nullptr, DEFAULT_PORT, &hints, &result);
     if (iResult != 0) {
         std::cerr << "getaddrinfo failed: " << iResult << std::endl;
-        WSACleanup();
+        ();
         DebugException("Getaddrinfo failed");
     }
     initialize(result);
@@ -32,7 +32,6 @@ MeyaS::ServerSocket::ServerSocket(const std::string &port): port(port) {
     int iResult = getaddrinfo(nullptr, port.c_str(), &hints, &result);
     if (iResult != 0) {
         std::cerr << "Getaddrinfo failed: " << iResult << std::endl;
-        WSACleanup();
         DebugException("Getaddrinfo failed");
     }
     initialize(result);
@@ -51,7 +50,6 @@ bool MeyaS::ServerSocket::bind() {
         closesocket(sockfd);
         addrInfo = nullptr;
         sockfd = INVALID_SOCKET;
-        WSACleanup();
         DebugException("Bind socket failed");
         return false;
     }
@@ -66,7 +64,6 @@ bool MeyaS::ServerSocket::listen() {
         std::cerr << "Listen failed with error: " << WSAGetLastError() << std::endl;
         closesocket(sockfd);
         sockfd = INVALID_SOCKET;
-        WSACleanup();
         DebugException("Bind socket failed");
         return false;
     }
@@ -85,7 +82,6 @@ MeyaS::WorkerSocket *MeyaS::ServerSocket::accept() {
         if (err != WSAEWOULDBLOCK) {
             std::cerr << "Accept failed: " << err << std::endl;
             closesocket(sockfd);
-            WSACleanup();
             DebugException("Server accept failed");
         }
         return nullptr;

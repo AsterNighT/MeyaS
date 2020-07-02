@@ -14,7 +14,6 @@ MeyaS::DataPack *MeyaS::DataSocket::recv(uint maxLength) {
             std::cerr << "recv failed: " << WSAGetLastError() << std::endl;
             closesocket(sockfd);
             sockfd = INVALID_SOCKET;
-            WSACleanup();
             DebugException("Recv failed");
         }
         delete[] recvbuf;
@@ -33,7 +32,6 @@ bool MeyaS::DataSocket::send(const DataPack &dataPack) {
             std::cerr << "Send failed: " << WSAGetLastError() << std::endl;
             closesocket(sockfd);
             sockfd = INVALID_SOCKET;
-            WSACleanup();
             DebugException("Send failed");
         }
         return false;
