@@ -11,10 +11,12 @@ namespace MeyaS {
     public:
         Broadcaster();
 
+        // Broadcast data
         bool shout(const DataPack &dataPack);
 
         bool listen();
 
+        //Receive broadcast data
         std::pair<DataPack*, std::string> accept();
 
     private:

@@ -11,10 +11,13 @@ namespace MeyaS {
 
         explicit ServerSocket(const std::string &port);
 
+        // Same as ::bind
         bool bind();
 
+        // Same as ::listen
         bool listen();
 
+        // Same as ::accept
         WorkerSocket* accept();
     private:
         std::string port;
