@@ -2,6 +2,7 @@
   <dictionary name="klxjt">
     <words>
       <w>addr</w>
+      <w>cout</w>
       <w>getaddrinfo</w>
       <w>meya</w>
       <w>sockfd</w>

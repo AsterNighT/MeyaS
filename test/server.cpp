@@ -22,15 +22,15 @@ int main() {
     //Receiving data
     auto peers = soc.getPeers();
     auto stream = peers.at(0)->getPeer();
-    auto p = stream->getLineW();
-    std::wcout << p << std::endl;
+    auto p = stream->getLine();
+    cout_MeyaS << p << std::endl;
 
     //Sending data
-    stream->sendLineW(L"九磅十五便士");
-    stream->sendLineW(L"外加一份煎饼果子");
+    stream->sendLine(CPMeyaS("九磅十五便士"));
+    stream->sendLine(CPMeyaS("外加一份煎饼果子"));
     peers.at(0)->checkStatus();
-    stream->sendLineW(L"这咋就不好了呢");
+    stream->sendLine(CPMeyaS("这咋就不好了呢"));
     peers.at(0)->checkStatus();
-    std::wcout<<(peers.at(0)->isAlive()?L"True":L"False")<<std::endl;
+    cout_MeyaS<<(peers.at(0)->isAlive()?CPMeyaS("True"):CPMeyaS("False"))<<std::endl;
     Sleep(2000);
 }

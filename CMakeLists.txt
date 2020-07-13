@@ -12,6 +12,7 @@ add_executable(Server test/server.cpp)
 link_directories(.)
 
 ADD_DEFINITIONS(-DDEBUG_MeyaS)
+ADD_DEFINITIONS(-DUTF16_MeyaS)
 target_link_libraries(MeyaS Ws2_32.lib)
 target_link_libraries(Client MeyaS)
 target_link_libraries(Server MeyaS)

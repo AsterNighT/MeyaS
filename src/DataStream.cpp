@@ -15,24 +15,24 @@ MeyaS::DataPack *MeyaS::DataStream::recv(MeyaS::uint maxLength) {
     return nullptr;
 }
 
-MeyaS::DataStream::DataStream(MeyaS::DataSocket *socket) : socket(socket), maxWaitTime(5), identifier(L"Meyas"),
-                                                           cache(), cacheW() {}
+MeyaS::DataStream::DataStream(MeyaS::DataSocket *socket) : socket(socket), maxWaitTime(5), identifier(CPMeyaS("Meyas")),
+                                                           cache(){}
 
 MeyaS::DataStream::~DataStream() {
     delete socket;
     socket = nullptr;
 }
 
-int MeyaS::DataStream::sendLine(std::string s, char delimiter) {
+int MeyaS::DataStream::sendLine(String_MeyaS s, Char_MeyaS delimiter) {
     s += delimiter;
     auto t = DataPack(s);
     return send(t);
 }
 
-std::string MeyaS::DataStream::getLine(char delimiter) {
-    std::string s;
+String_MeyaS MeyaS::DataStream::getLine(Char_MeyaS delimiter) {
+    String_MeyaS s;
     auto pos = cache.find(delimiter);
-    if (pos != std::string::npos) { // Should be a full line
+    if (pos != String_MeyaS::npos) { // Should be a full line
         s = cache.substr(0, pos);
         cache = cache.substr(pos + 1);
         return s;
@@ -42,65 +42,26 @@ std::string MeyaS::DataStream::getLine(char delimiter) {
     do {
         auto ret = socket->recv(512);
         if (ret != nullptr) {
-            auto retString = std::string(reinterpret_cast<const char *>(ret->data));
+            auto retString = String_MeyaS(reinterpret_cast<const Char_MeyaS *>(ret->data));
             cache += retString;
             MeyaS::uint totalLength = retString.length() + 1;
-            while (totalLength < ret->length) { // More data to be retrieved
-                retString = std::string(reinterpret_cast<const char *>(ret->data) + totalLength);
+            while (totalLength < ret->length / sizeof(Char_MeyaS)) { // More data to be retrieved
+                retString = String_MeyaS(reinterpret_cast<const Char_MeyaS *>(ret->data) + totalLength);
                 cache += retString;
                 totalLength += retString.length() + 1;
             }
             delete ret;
             pos = cache.find(delimiter);
-            if (pos != std::wstring::npos) { // Should be a full line
+            if (pos != String_MeyaS::npos) { // Should be a full line
                 s = cache.substr(0, pos);
                 cache = cache.substr(pos + 1);
                 return s;
             }
         }
     } while (!t.timeUp());
-    return "";
+    return CPMeyaS("");
 }
 
 void MeyaS::DataStream::setWaitTime(int time) {
     this->maxWaitTime = time;
-}
-
-int MeyaS::DataStream::sendLineW(std::wstring s, wchar_t delimiter) {
-    s += delimiter;
-    auto t = DataPack(s);
-    return send(t);
-}
-
-std::wstring MeyaS::DataStream::getLineW(wchar_t delimiter) {
-    std::wstring s;
-    auto pos = cacheW.find(delimiter);
-    if (pos != std::wstring::npos) { // Should be a full line
-        s = cacheW.substr(0, pos);
-        cacheW = cacheW.substr(pos + 1);
-        return s;
-    }
-    MeyaS::Timer t;
-    t.start(maxWaitTime);
-    do {
-        auto ret = socket->recv(512);
-        if (ret != nullptr) {
-            auto retString = std::wstring(reinterpret_cast<const wchar_t *>(ret->data));
-            cacheW += retString;
-            MeyaS::uint totalLength = retString.length() + 1;
-            while (totalLength < ret->length / 2) { // More data to be retrieved
-                retString = std::wstring(reinterpret_cast<const wchar_t *>(ret->data) + totalLength);
-                cacheW += retString;
-                totalLength += retString.length() + 1;
-            }
-            delete ret;
-            pos = cacheW.find(delimiter);
-            if (pos != std::wstring::npos) { // Should be a full line
-                s = cacheW.substr(0, pos);
-                cacheW = cacheW.substr(pos + 1);
-                return s;
-            }
-        }
-    } while (!t.timeUp());
-    return L"";
 }

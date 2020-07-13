@@ -8,25 +8,25 @@ MeyaS::DataStream *MeyaS::Worker::getPeer() {
     return peer;
 }
 
-std::wstring MeyaS::Worker::checkStatus() {
-    auto ret = peer->sendLineW(L"#heart");
+String_MeyaS MeyaS::Worker::checkStatus() {
+    auto ret = peer->sendLine(CPMeyaS("#heart"));
     if (ret != 0) {
         alive = false;
-        return L"";
+        return CPMeyaS("");
     }
     MeyaS::Timer t;
     t.start(maxWaitTime);
     do {
-        auto s = peer->getLineW();
+        auto s = peer->getLine();
         if (s.empty()) continue;
         return s;
     } while (!t.timeUp());
     alive = false;
-    return L"";
+    return CPMeyaS("");
 }
 
 void MeyaS::Worker::shutdown() {
-    peer->sendLineW(L"#shutdown");
+    peer->sendLine(CPMeyaS("#shutdown"));
     alive = false;
 }
 

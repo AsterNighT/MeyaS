@@ -53,14 +53,9 @@ MeyaS::DataPack::~DataPack() {
     this->data = nullptr;
 }
 
-MeyaS::DataPack::DataPack(const std::string &data) {
-    length = data.length() + 1;
+MeyaS::DataPack::DataPack(const String_MeyaS &data) {
+    length = (data.length() + 1)*sizeof(Char_MeyaS);
     this->data = new byte[length];
     memcpy((void *) this->data, data.c_str(), length);
 }
 
-MeyaS::DataPack::DataPack(const std::wstring &data) {
-    length = (data.length() + 1) * sizeof(data[0]);
-    this->data = new byte[length];
-    memcpy((void *) this->data, data.c_str(), length);
-}

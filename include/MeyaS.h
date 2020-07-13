@@ -5,7 +5,6 @@
 //
 // The only file should be included to use the lib
 
-//TODO: Use macro to differ ascii mode from UTF16 mod except rather than has two version of send and recv
 #pragma once
 #include "common.h"
 #include "Server.h"
